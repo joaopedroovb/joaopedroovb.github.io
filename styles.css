@@ -1,0 +1,22 @@
+:root {
+    font-size: 1.2em;
+}
+body {
+    font-family: 'JetBrains Mono', monospace;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    background-color: #FFF;
+    color: #000;
+}
+
+code {
+    font-size: 1.2em;
+}
+
+a {
+    color: #00008B;
+    &:visited {
+        color:#FF3030;
+    }
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>João Pedro Oliveira</title>
+    <meta name="description" content="personal site and portfolio" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <main>
+        <button onclick="loadLanguage('en')">EN</button>
+        <button onclick="loadLanguage('pt')">PT</button>
+
+        <h1 data-i18n="title">João Pedro Oliveira</h1>
+        <section>
+            <p data-i18n="bio">I’m into puzzles, coding, running, and music stuff.</p>
+        </section>
+
+
+        <section>
+            <h2 data-i18n="contact">Contact</h2>
+            <p><a href="https://github.com/joaopedroovb">Github</a></p>
+            </p>
+        </section>
+    </main>
+    <script>
+        const defaultLang = navigator.language.startsWith('pt') ? 'pt' : 'en';
+
+        async function loadLanguage(lang) {
+            const res = await fetch(`./i18n/${lang}.json`);
+            const translations = await res.json();
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                el.textContent = translations[key];
+            });
+
+            document.documentElement.lang = lang;
+        }
+
+        loadLanguage(defaultLang);
+    </script>
+
+</body>
+
+</html>
