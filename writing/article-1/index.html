@@ -2,77 +2,126 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AsyncStorage no React Native: Por que usar @ nas chaves</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            color: #000;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AsyncStorage no React Native: Por que usar @ nas chaves</title>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&display=swap"
+    rel="stylesheet"> -->
+  <style>
+    body {
+      /* font-family: 'Inter', sans-serif; */
+      font-family: Arial, sans-serif;
+      line-height: 1.75;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: #fefefe;
+      color: #111;
+    }
 
-        code {
-            font-family: 'JetBrains Mono', monospace
-        }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      font-weight: 700;
+    }
 
-        pre {
-            width: fit-content;
-            padding: 1em;
-            border-radius: 1em;
-            line-height: 1.25em;
-            white-space: pre-wrap;
-        }
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0.25rem;
+    }
 
-        article {
-            max-width: 80ch;
-        }
-        h1,
-        h2,
-        h3 {
-            color: #222;
-        }
-        pre {
-            background-color: #272822;
-            color: #f8f8f2;
-            padding: 15px;
-            overflow-x: auto;
-            border-radius: 5px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-        }
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-    </style>
+    p {
+      margin: 1rem 0;
+      font-size: 1.05rem;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    pre {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+    }
+
+    ul {
+      margin: 1rem 0 1rem 2rem;
+      list-style-type: disc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #ddd;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>AsyncStorage no React Native: Por que usar @ nas suas chaves faz toda a diferença</h1>
+  <article>
+    <h1>AsyncStorage no React Native: Por que usar <code>@</code> nas suas chaves faz toda a diferença</h1>
+
+    <p>Lendo o artigo <a href="https://www.voicefy.com.br/react-native-asyncstorage-guia-completo-persistencia-dados/"
+        target="_blank">“React Native AsyncStorage: Guia Completo para Persistência de Dados”</a>, fiquei curioso sobre
+      o
+      uso do <code>@</code> nas chaves do AsyncStorage. Achei interessante como um detalhe aparentemente pequeno pode
+      organizar e proteger os dados do app, e decidi escrever este artigo para explorar melhor essa prática.</p>
 
     <p>Se você já trabalhou com <strong>React Native</strong>, provavelmente conhece o AsyncStorage. Ele é simples,
-        poderoso e permite salvar dados localmente, garantindo que o usuário não perca preferências, tokens ou estados
-        importantes do app ao fechá-lo.</p>
+      poderoso e permite salvar dados localmente, garantindo que o usuário não perca preferências, tokens ou estados
+      importantes do app ao fechá-lo.</p>
 
-    <p>Mas há um detalhe aparentemente pequeno que pode salvar você de muita dor de cabeça: <strong>usar o @ nas chaves
-            do AsyncStorage</strong>.</p>
+    <p>Mas há um detalhe aparentemente pequeno que pode salvar você de muita dor de cabeça: <strong>usar o
+        <code>@</code>
+        nas chaves do AsyncStorage</strong>.</p>
 
     <h2>A armadilha das chaves “sem nada”</h2>
 
@@ -83,75 +132,81 @@
     <p>Funciona? Claro. Você pode recuperar o token, manter a sessão ativa, até rodar em produção sem problemas.</p>
 
     <p>Mas aí outro módulo, ou uma biblioteca que você adicionou depois, decide usar exatamente a mesma chave:
-        <code>user_token</code>. E pronto: o seu token é sobrescrito sem aviso.</p>
+      <code>user_token</code>. E pronto: o seu token é sobrescrito sem aviso.
+    </p>
 
     <p>Além disso, com dezenas de chaves espalhadas pelo app, fica difícil <strong>saber de onde veio cada
-            valor</strong>. Limpar dados antigos, migrar para outra estrutura ou identificar problemas torna-se um
-        quebra-cabeça.</p>
+        valor</strong>.
+      Limpar dados antigos, migrar para outra estrutura ou identificar problemas torna-se um quebra-cabeça.</p>
 
-    <h2>A magia do @</h2>
+    <h2>A magia do <code>@</code></h2>
 
     <p>Agora, veja como ficaria com o prefixo <code>@</code>:</p>
 
     <pre><code>await AsyncStorage.setItem('@user_token', 'meuToken123');</code></pre>
 
     <p>O <code>@</code> funciona como um <strong>namespace</strong>, um “guardião” das suas chaves. Ele traz três
-        grandes benefícios:</p>
+      grandes benefícios:</p>
 
     <ul>
-        <li><strong>Evita conflitos:</strong> suas chaves ficam isoladas, mesmo que outras bibliotecas usem nomes
-            parecidos.</li>
-        <li><strong>Organiza o armazenamento:</strong> ao inspecionar o AsyncStorage, fica claro que tudo que começa com
-            <code>@</code> pertence ao seu app.</li>
-        <li><strong>Facilita manutenção e migração:</strong> você pode filtrar todas as chaves do seu app usando scripts
-            simples que busquem pelo <code>@</code>.</li>
+      <li><strong>Evita conflitos:</strong> suas chaves ficam isoladas, mesmo que outras bibliotecas usem nomes
+        parecidos.
+      </li>
+      <li><strong>Organiza o armazenamento:</strong> ao inspecionar o AsyncStorage, fica claro que tudo que começa com
+        <code>@</code> pertence ao seu app.
+      </li>
+      <li><strong>Facilita manutenção e migração:</strong> você pode filtrar todas as chaves do seu app usando scripts
+        simples que busquem pelo <code>@</code>.</li>
     </ul>
 
     <p>Imagine que você precise remover todos os tokens antigos em um logout. Com chaves sem prefixo, teria que
-        adivinhar quais pertencem a você. Com <code>@</code>, é só filtrar e limpar com segurança.</p>
+      adivinhar
+      quais pertencem a você. Com <code>@</code>, é só filtrar e limpar com segurança.</p>
 
     <h2>Comparando na prática</h2>
 
     <table>
-        <tr>
-            <th>Aspecto</th>
-            <th>Sem @</th>
-            <th>Com @</th>
-        </tr>
-        <tr>
-            <td>Conflitos de chave</td>
-            <td>Possível</td>
-            <td>Improvável</td>
-        </tr>
-        <tr>
-            <td>Organização do armazenamento</td>
-            <td>Confuso</td>
-            <td>Limpo e fácil de identificar</td>
-        </tr>
-        <tr>
-            <td>Migração/limpeza de dados</td>
-            <td>Arriscada</td>
-            <td>Segura e eficiente</td>
-        </tr>
-        <tr>
-            <td>Reconhecimento pela comunidade</td>
-            <td>Básico</td>
-            <td>Boa prática recomendada</td>
-        </tr>
+      <tr>
+        <th>Aspecto</th>
+        <th>Sem <code>@</code></th>
+        <th>Com <code>@</code></th>
+      </tr>
+      <tr>
+        <td>Conflitos de chave</td>
+        <td>Possível</td>
+        <td>Improvável</td>
+      </tr>
+      <tr>
+        <td>Organização do armazenamento</td>
+        <td>Confuso</td>
+        <td>Limpo e fácil de identificar</td>
+      </tr>
+      <tr>
+        <td>Migração/limpeza de dados</td>
+        <td>Arriscada</td>
+        <td>Segura e eficiente</td>
+      </tr>
+      <tr>
+        <td>Reconhecimento pela comunidade</td>
+        <td>Básico</td>
+        <td>Boa prática recomendada</td>
+      </tr>
     </table>
 
     <h2>A lição</h2>
 
     <p>Usar <code>@</code> não é obrigatório, mas é uma <strong>boa prática</strong>. Pequenos detalhes como esse podem
-        fazer a diferença entre um app que escala com segurança e um app que se torna um labirinto de dados perdidos ou
-        sobrescritos.</p>
+      fazer a diferença entre um app que escala com segurança e um app que se torna um labirinto de dados perdidos ou
+      sobrescritos.</p>
 
     <p>Se você quer manter seu AsyncStorage <strong>organizado, seguro e fácil de manter</strong>, comece a prefixar
-        suas chaves. Um pequeno gesto que economiza muito tempo e frustração no futuro.</p>
+      suas chaves. Um pequeno gesto que economiza muito tempo e frustração no futuro.</p>
+
+    <footer>
+      <hr />
+      <p>João Pedro Oliveira</p>
+    </footer>
+  </article>
 </body>
-<footer>
-    <hr />
-    <p>João Pedro Oliveira</p>
-</footer>
 
 </html>
