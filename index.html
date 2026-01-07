@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>João Pedro Oliveira</title>
-    <meta name="description" content="personal site and portfolio" />
+    <meta name="description" content="site pessoal e portifólio" />
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+Mono:wght@100..900&display=swap"
         rel="stylesheet">
@@ -111,27 +111,27 @@
 
 <body>
     <main>
-        <button onclick="loadLanguage('en')">EN</button>
-        <button onclick="loadLanguage('pt')">PT</button>
+        <!-- <button onclick="loadLanguage('en')">EN</button>
+        <button onclick="loadLanguage('pt')">PT</button> -->
 
-        <h1 data-i18n="title">João Pedro Oliveira</h1>
+        <h1>João Pedro Oliveira</h1>
         <section>
-            <p data-i18n="bio">I’m into puzzles, coding, running, and music stuff.</p>
+            <p>Gosto de quebra-cabeças, programação, corrida e coisas relacionadas a música.</p>
         </section>
 
         <section>
-            <h2>Writing</h2>
-            <p>Check out <a href="./writing">writing</a></p>
+            <h2>Textos</h2>
+            <p>Veja meus <a href="./writing">textos</a></p>
         </section>
 
 
         <section>
-            <h2 data-i18n="contact">Contact</h2>
+            <h2 data-i18n="contact">Contato</h2>
             <p><a href="https://github.com/joaopedroovb">Github</a></p>
             </p>
         </section>
     </main>
-    <script>
+    <!-- <script>
         const defaultLang = navigator.language.startsWith('pt') ? 'pt' : 'en';
 
         async function loadLanguage(lang) {
@@ -147,8 +147,7 @@
         }
 
         loadLanguage(defaultLang);
-    </script>
-
+    </script> -->
 </body>
 
 </html>
